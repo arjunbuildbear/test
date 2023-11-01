@@ -46,7 +46,7 @@ jobs:
           echo "Test Status: $TEST_STATUS"
         shell: bash
 
-      - - name: Test Status
+      - name: Test Status
         id: wait_for_test_status
         run: |
           DASHBOARD_URL="https://app.sigma.buildbear.io/"
