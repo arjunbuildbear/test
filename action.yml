@@ -1,0 +1,12 @@
+name: 'My Custom Action'
+description: 'A brief description of what this action does.'
+inputs:
+  example_input:
+    description: 'An example input for the action.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
+branding:
+  icon: 'activity'
+  color: 'green'
