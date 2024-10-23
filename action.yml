@@ -1,4 +1,4 @@
-name: 'BB_action'
+name: 'bb_action_ci'
 description: 'Deploy and test smart contracts using Foundry'
 
 # Define the inputs that users can configure
