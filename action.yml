@@ -1,12 +1,47 @@
-name: 'ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
-description: 'A brief description of what this action does.'
+name: 'BB_action'
+description: 'Deploy and test smart contracts using Foundry'
+
+# Define the inputs that users can configure
 inputs:
-  example_input:
-    description: 'An example input for the action.'
+  network:
+    description: 'List of networks you want to deploy on'
     required: true
+    default: |
+      [
+        {
+          "name": "mainnet",
+          "url": "http://localhost:8545",
+          "chainId": 1
+        }
+      ]
+  deployCmd:
+    description: 'Command to deploy the contract'
+    required: true
+    default: 'forge test'
+
+# Define the environment variables, like the Foundry profile
+env:
+  FOUNDRY_PROFILE: ci
+
+# Define how the action runs on Ubuntu
 runs:
-  using: 'node12'
-  main: 'index.js'
-branding:
-  icon: 'activity'
-  color: 'green'
+  using: 'composite'
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Install Foundry
+      uses: foundry-rs/foundry-toolchain@v1
+      with:
+        version: nightly
+
+    - name: Show Forge version
+      run: forge --version
+
+    - name: Deploy Contract
+      run: |
+        NETWORKS='${{ inputs.network }}'
+        DEPLOY_CMD='${{ inputs.deployCmd }}'
+        echo "Deploying on networks: $NETWORKS"
+        $DEPLOY_CMD
